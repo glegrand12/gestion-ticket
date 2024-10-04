@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
@@ -22,33 +23,30 @@ class Users
     #[ORM\Column(length: 255)]
     private ?string $role = null;
 
-    public function getId(): ?int
+    #[ORM\OneToMany(targetEntity: Tickets::class, mappedBy: 'user')]
+    private ?Collection $ticket_id = null;
+
+    #[ORM\OneToMany(targetEntity: TicketStatusHistory::class, mappedBy: 'changed_by')]
+    private Collection $ticketStatusHistory;
+
+    public function getTicketId(): ?Collection
     {
-        return $this->id;
+        return $this->ticket_id;
     }
 
-    public function getEmail(): ?string
+    public function setTicketId(?Collection $ticket_id): void
     {
-        return $this->email;
+        $this->ticket_id = $ticket_id;
     }
 
-    public function setEmail(string $email): static
+    public function getTicketStatusHistory(): Collection
     {
-        $this->email = $email;
-
-        return $this;
+        return $this->ticketStatusHistory;
     }
 
-    public function getPassword(): ?string
+    public function setTicketStatusHistory(Collection $ticketStatusHistory): void
     {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
+        $this->ticketStatusHistory = $ticketStatusHistory;
     }
 
     public function getRole(): ?string
@@ -56,10 +54,40 @@ class Users
         return $this->role;
     }
 
-    public function setRole(string $role): static
+    public function setRole(?string $role): void
     {
         $this->role = $role;
-
-        return $this;
     }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+
 }
