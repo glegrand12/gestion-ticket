@@ -2,7 +2,11 @@
 
 namespace App\Entity;
 
+use AllowDynamicProperties;
+use App\Enum\TicketPriorityType;
+use App\Enum\TicketStatusType;
 use App\Repository\TicketsRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,27 +15,56 @@ class Tickets
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: 'text')]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $deadine = null;
+    #[ORM\Column(type: 'string', enumType: TicketStatusType::class)]
+    private ?string $status = null;
 
-    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
-    private ?\DateTimeImmutable $created_at = null;
+    #[ORM\Column(type: 'string', enumType: TicketPriorityType::class)]
+    private ?string $priority = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    #[ORM\ManyToOne(targetEntity: Users::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Users $assignedTo = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $deadline = null;
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $created_at;
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $updated_at;
+
+    #[ORM\OneToMany(targetEntity: TicketStatusHistory::class, mappedBy: 'ticket')]
+    private Collection $statusHistories;
+
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 
     public function getTitle(): ?string
@@ -39,11 +72,9 @@ class Tickets
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
     public function getDescription(): ?string
@@ -51,46 +82,69 @@ class Tickets
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
-
-        return $this;
     }
 
-    public function getDeadine(): ?\DateTimeInterface
+    public function getStatus(): ?string
     {
-        return $this->deadine;
+        return $this->status;
     }
 
-    public function setDeadine(\DateTimeInterface $deadine): static
+    public function setStatus(?string $status): void
     {
-        $this->deadine = $deadine;
-
-        return $this;
+        $this->status = $status;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getPriority(): ?string
     {
-        return $this->created_at;
+        return $this->priority;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setPriority(?string $priority): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        $this->priority = $priority;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getAssignedTo(): ?Users
     {
-        return $this->updated_at;
+        return $this->assignedTo;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    public function setAssignedTo(?Users $assignedTo): void
     {
-        $this->updated_at = $updated_at;
-
-        return $this;
+        $this->assignedTo = $assignedTo;
     }
+
+    public function getDeadline(): ?\DateTimeInterface
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(?\DateTimeInterface $deadline): void
+    {
+        $this->deadline = $deadline;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getStatusHistories(): Collection
+    {
+        return $this->statusHistories;
+    }
+
+    public function setStatusHistories(Collection $statusHistories): void
+    {
+        $this->statusHistories = $statusHistories;
+    }
+
 }
