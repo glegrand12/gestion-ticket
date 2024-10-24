@@ -9,6 +9,8 @@ if it's the first time you are running the application, you need to install the 
 
 **example:** `git checkout -b feat/your-feature-name`
 
+`composer install`
+
 ```bash
 php bin/console doctrine:database:create
 
