@@ -3,6 +3,13 @@
         <li class="list-group-item bg-light">
             <a href="{{ path('app_dashboard') }}" class="text-decoration-none text-dark">Dashboard</a>
         </li>
+        {% if is_granted('ROLE_SUPPORT') %}
+        <li class="list-group-item bg-light">
+            <a href="{{ path('app_users_index') }}" class="text-decoration-none text-dark">Utilisateurs</a>
+        </li>
+        {% endif %}
+        {# <li class="list-group-item bg-light">
+            <a href="{{ path('app_users_index') }}" class="text-decoration-none text-dark">Users</a>
         {# <li class="list-group-item bg-light">
             <a href="{{ path('app_profile') }}" class="text-decoration-none text-dark">Profil</a>
         </li> #}
