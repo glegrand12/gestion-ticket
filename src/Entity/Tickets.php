@@ -6,8 +6,9 @@ use AllowDynamicProperties;
 use App\Enum\TicketPriorityType;
 use App\Enum\TicketStatusType;
 use App\Repository\TicketsRepository;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TicketsRepository::class)]
@@ -25,10 +26,10 @@ class Tickets
     private ?string $description = null;
 
     #[ORM\Column(type: 'string', enumType: TicketStatusType::class)]
-    private ?string $status = null;
+    private ?TicketStatusType $status = null;
 
     #[ORM\Column(type: 'string', enumType: TicketPriorityType::class)]
-    private ?string $priority = null;
+    private ?TicketPriorityType $priority = null;
 
     #[ORM\ManyToOne(targetEntity: Users::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -46,6 +47,12 @@ class Tickets
     #[ORM\OneToMany(targetEntity: TicketStatusHistory::class, mappedBy: 'ticket')]
     private Collection $statusHistories;
 
+    public function __construct()
+    {
+        $this->statusHistories = new ArrayCollection();
+        $this->created_at = new DateTimeImmutable();
+        $this->updated_at = new DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -87,22 +94,22 @@ class Tickets
         $this->description = $description;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?TicketStatusType
     {
         return $this->status;
     }
 
-    public function setStatus(?string $status): void
+    public function setStatus(?TicketStatusType $status): void
     {
         $this->status = $status;
     }
 
-    public function getPriority(): ?string
+    public function getPriority(): ?TicketPriorityType
     {
         return $this->priority;
     }
 
-    public function setPriority(?string $priority): void
+    public function setPriority(?TicketPriorityType $priority): void
     {
         $this->priority = $priority;
     }
