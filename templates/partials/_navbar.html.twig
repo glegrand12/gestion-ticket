@@ -7,11 +7,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="{{ path('home') }}" class="nav-link">Accueil</a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ path('app_dashboard') }}" class="nav-link">Dashboard</a>
                 </li>
+                {% if is_granted('ROLE_SUPPORT') %}
+                <li class="nav-item">
+                    <a href="{{ path('app_users_index') }}" class="nav-link">Utilisateurs</a>
+                </li>
+                {% endif %}
                 {% if app.user %}
                     <li class="nav-item">
                         <a href="{{ path('app_logout') }}" class="nav-link">Déconnexion</a>

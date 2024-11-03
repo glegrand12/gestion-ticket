@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Details{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">User Details</h1>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Roles</th>
+                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Date création</th>
+                    <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-3">
+            <a href="{{ path('app_users_index') }}" class="btn btn-secondary">Revenir à la liste</a>
+            <a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-primary">Edit</a>
+            {{ include('users/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
