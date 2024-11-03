@@ -25,9 +25,6 @@ class UsersType extends AbstractType
                     'Admin' => 'ROLE_ADMIN',
                 ],
             ])
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
         ;
 
         $builder->get('roles')->addModelTransformer(new CallbackTransformer(
