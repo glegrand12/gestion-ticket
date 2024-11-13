@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tickets index{% endblock %}
+
+{% block body %}
+    <h1>Tickets index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Assignée à</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Deadline</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.assignedTo.email }}</td>
+                <td>{{ ticket.status.value }}</td>
+                <td>{{ ticket.priority.value }}</td>
+                <td>{{ ticket.deadline ? ticket.deadline|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ ticket.createdAt ? ticket.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}">show</a>
+                    <a href="{{ path('app_tickets_edit', {'id': ticket.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tickets_new') }}">Create new</a>
+{% endblock %}

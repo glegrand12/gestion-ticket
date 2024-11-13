@@ -16,4 +16,5 @@ enum TicketPriorityType: string
             self::HAUTE => 'Haute',
         };
     }
+
 }

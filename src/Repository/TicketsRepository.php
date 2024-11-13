@@ -15,6 +15,14 @@ class TicketsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tickets::class);
     }
+//    public function findAllWithUsersEmail($value): array
+//        {
+//            return $this->createQueryBuilder('t')
+//                ->join('t.assignedTo', 'users')
+//                ->getQuery()
+//                ->getResult()
+//            ;
+//        }
 
     //    /**
     //     * @return Tickets[] Returns an array of Tickets objects

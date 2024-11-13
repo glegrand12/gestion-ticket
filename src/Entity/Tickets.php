@@ -66,12 +66,12 @@ class Tickets
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $createdAt;
     }
 
     public function getTitle(): ?string
@@ -136,12 +136,12 @@ class Tickets
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->updated_at;
     }
 
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updatedAt;
     }
 
     public function getStatusHistories(): Collection
