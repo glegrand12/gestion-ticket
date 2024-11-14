@@ -12,15 +12,14 @@
         {% endblock %}
     </head>
     <body>
-        <header>
-            {% include 'partials/_navbar.html.twig' %}
-        </header>
+    {% include 'partials/_navbar.html.twig' %}
+    <div class="d-flex" id="wrapper">
         {% include 'partials/_sidebar.html.twig' %}
-        <div class="content m-4">
+    </div>
 
-            <main>
-                {% block body %}{% endblock %}
-            </main>
-        </div>
+    <div id="page-content-wrapper" class="p-4 mt-5">
+        {% block body %}{% endblock %}
+    </div>
+
     </body>
 </html>

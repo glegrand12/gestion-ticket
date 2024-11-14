@@ -118,7 +118,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setRoles(array | string $roles): self
     {
-        if(is_string($roles)){
+        if (is_string($roles)) {
             $roles = [$roles];
         }
 
@@ -136,6 +136,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-
-
+    public function isAdmin(): bool
+    {
+        return in_array('ROLE_ADMIN', $this->getRoles());
+    }
 }

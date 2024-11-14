@@ -25,10 +25,10 @@ class Tickets
     #[ORM\Column(type: 'text')]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'string', enumType: TicketStatusType::class)]
+    #[ORM\Column(enumType: TicketStatusType::class)]
     private ?TicketStatusType $status = null;
 
-    #[ORM\Column(type: 'string', enumType: TicketPriorityType::class)]
+    #[ORM\Column(enumType: TicketPriorityType::class)]
     private ?TicketPriorityType $priority = null;
 
     #[ORM\ManyToOne(targetEntity: Users::class)]
@@ -66,12 +66,12 @@ class Tickets
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    public function setCreatedAt(?\DateTimeInterface $created_at): void
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
     }
 
     public function getTitle(): ?string
@@ -136,12 +136,12 @@ class Tickets
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): void
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updated_at;
     }
 
     public function getStatusHistories(): Collection

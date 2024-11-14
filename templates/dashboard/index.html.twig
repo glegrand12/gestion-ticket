@@ -1,16 +1,158 @@
+{% extends 'base.html.twig' %}
 
+{% block title %}Dashboard{% endblock %}
+{% import 'macros/status.html.twig' as status %}
+{% import 'macros/priority.html.twig' as priority %}
+{% block body %}
+    <style>
+        .chart-container {
+            width: 100%;
+            max-width: 450px;
+            height: 300px;
+            margin: 0 auto;
+        }
 
-    {% extends 'base.html.twig' %}
+        .charts-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
-    {% block title %}Tableau de Bord{% endblock %}
+        .charts-section .col-md-6 {
+            flex: 1 1 calc(50% - 20px);
+            max-width: 48%;
+        }
 
-    {% block body %}
+        .tickets-section {
+            margin-top: 40px;
+            padding-top: 8rem;
+        }
 
-        <style>
-            .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-            .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-        </style>
+        .table-responsive {
+            overflow-x: auto;
+        }
 
-        <h1>Bienvenue sur votre tableau de bord, {{ user.email }} !</h1>
-    {% endblock %}
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+        }
+    </style>
 
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Bienvenue {{ username }}</h1>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="col-md-6">
+                <h5 class="section-title">Tickets par Statut</h5>
+                <div class="chart-container">
+                    {{ render_chart(statusChart) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h5 class="section-title">Tickets par priorité</h5>
+                <div class="chart-container">
+                    {{ render_chart(priorityChart) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tickets-section">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Vos Tickets</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Titre</th>
+                            <th>Statut</th>
+                            <th>Priorité</th>
+                            <th>Créé le</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ticket in userTickets %}
+                            <tr>
+                                <td>{{ ticket.id }}</td>
+                                <td>{{ ticket.title }}</td>
+                                <td style="color: {{ status.statusColor(ticket.status.label) }};">
+                                    {{ ticket.status.label }}
+                                </td>
+                                <td style="color: {{ priority.priorityColor(ticket.priority.label) }};">
+                                    {{ ticket.priority.label }}
+                                </td>
+                                <td>{{ ticket.createdAt|date('Y-m-d') }}</td>
+                                {#  <td>#}
+                                    {#                                        <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">Voir</a>#}
+                                    {#                                    </td>#}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">No tickets found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="container">
+            <div class="tickets-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Tous les Tickets</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Titre</th>
+                                <th>Statut</th>
+                                <th>Priorité</th>
+                                <th>Créé le</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ticket in allTickets %}
+                                <tr>
+                                    <td>{{ ticket.id }}</td>
+                                    <td>{{ ticket.title }}</td>
+                                    <td style="color: {{ status.statusColor(ticket.status.label) }};">
+                                        {{ ticket.status.label }}
+                                    </td>
+                                    <td style="color: {{ priority.priorityColor(ticket.priority.label) }};">
+                                        {{ ticket.priority.label }}
+                                    </td>
+                                    <td>{{ ticket.createdAt|date('Y-m-d') }}</td>
+{#                                    <td>#}
+{#                                        <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">Voir</a>#}
+{#                                    </td>#}
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No tickets found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

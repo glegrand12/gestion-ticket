@@ -40,4 +40,34 @@ class TicketsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function countTicketsByStatus(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.status, COUNT(t.id) as count')
+            ->groupBy('t.status')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countTicketsByPriority(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.priority, COUNT(t.id) as count')
+            ->groupBy('t.priority')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTicketCountsByCreationDate(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->select("SUBSTRING(t.created_at, 1, 10) AS date, COUNT(t.id) AS count")
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }

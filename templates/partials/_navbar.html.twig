@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed w-100 mb-4">
     <div class="container-fluid">
         <a href="{{ path('home') }}" class="navbar-brand">Gestion de Tickets</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,9 +10,9 @@
                     <a href="{{ path('app_dashboard') }}" class="nav-link">Dashboard</a>
                 </li>
                 {% if is_granted('ROLE_SUPPORT') %}
-                <li class="nav-item">
-                    <a href="{{ path('app_users_index') }}" class="nav-link">Utilisateurs</a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_users_index') }}" class="nav-link">Utilisateurs</a>
+                    </li>
                 {% endif %}
                 {% if app.user %}
                     <li class="nav-item">
