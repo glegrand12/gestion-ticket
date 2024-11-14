@@ -1,0 +1,10 @@
+{% macro statusColor(status) %}
+    {% set colors = {
+        'Ouvert': '#007bff',
+        'En cours': '#28a745',
+        'Résolu': '#ffc107',
+        'Fermé': '#dc3545'
+    } %}
+
+    {{ colors[status] ?? '#6c757d' }}
+{% endmacro %}
