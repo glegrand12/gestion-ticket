@@ -1,0 +1,45 @@
+/* Styles pour la sidebar */
+#sidebar-wrapper {
+    position: fixed;
+    top: 56px; /* Hauteur de la navbar */
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 56px); /* Prend toute la hauteur sous la navbar */
+    background-color: #f8f9fa;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+/* Contenu principal décalé par rapport à la sidebar */
+#page-content-wrapper {
+    margin-left: 250px; /* Décalage pour laisser de la place à la sidebar */
+    padding-top: 20px;
+}
+
+/* Responsiveness pour petits écrans */
+@media (max-width: 768px) {
+    #sidebar-wrapper {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    #page-content-wrapper {
+        margin-left: 0;
+    }
+}
+
+/* Style pour les liens dans la sidebar */
+#sidebar-wrapper .list-group-item a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: #343a40;
+    text-decoration: none;
+}
+
+#sidebar-wrapper .list-group-item a:hover {
+    background-color: #e9ecef;
+    color: #343a40;
+}

@@ -1,17 +1,22 @@
 <aside class="bg-light border-end" id="sidebar-wrapper">
+    <!-- Menu de navigation -->
     <ul class="list-group list-group-flush">
         <li class="list-group-item bg-light">
-            <a href="{{ path('app_dashboard') }}" class="text-decoration-none text-dark">Dashboard</a>
+            <a href="{{ path('app_dashboard') }}" class="text-decoration-none text-dark"> {{ ux_icon('lucide:house', {height: '16px', width: '16px', 'aria-hidden': true}) }} Dashboard</a>
         </li>
         {% if is_granted('ROLE_SUPPORT') %}
-        <li class="list-group-item bg-light">
-            <a href="{{ path('app_users_index') }}" class="text-decoration-none text-dark">Utilisateurs</a>
-        </li>
+            <li class="list-group-item bg-light">
+                <a href="{{ path('app_users_index') }}" class="text-decoration-none text-dark">{{ ux_icon('lucide:circle-user-round', {height: '16px', width: '16px', 'aria-hidden': true}) }} Utilisateurs</a>
+            </li>
         {% endif %}
-        {# <li class="list-group-item bg-light">
-            <a href="{{ path('app_users_index') }}" class="text-decoration-none text-dark">Users</a>
-        {# <li class="list-group-item bg-light">
-            <a href="{{ path('app_profile') }}" class="text-decoration-none text-dark">Profil</a>
-        </li> #}
+        {% if app.user %}
+            <li class="list-group-item bg-light">
+                <a href="{{ path('app_logout') }}" class="text-decoration-none text-dark">{{ ux_icon('lucide:log-out', {height: '16px', width: '16px', 'aria-hidden': true}) }} Déconnexion</a>
+            </li>
+        {% else %}
+            <li class="list-group-item bg-light">
+                <a href="{{ path('app_login') }}" class="text-decoration-none text-dark"> {{ ux_icon('lucide:log-in', {height: '16px', width: '16px', 'aria-hidden': true}) }} Connexion</a>
+            </li>
+        {% endif %}
     </ul>
 </aside>
