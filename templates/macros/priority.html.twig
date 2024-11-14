@@ -1,0 +1,9 @@
+{% macro priorityColor(priority) %}
+    {% set colors = {
+        'Basse': '#007bff',
+        'Moyenne': '#ffc107',
+        'Haute': '#dc3545'
+    } %}
+
+    {{ colors[priority] ?? '#6c757d' }}
+{% endmacro %}
