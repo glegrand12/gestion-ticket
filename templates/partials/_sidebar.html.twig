@@ -2,12 +2,12 @@
     <!-- Menu de navigation -->
     <ul class="list-group list-group-flush">
 
-        {% if is_granted('ROLE_SUPPORT') %}
+        {% if is_granted('ROLE_USER') %}
             <li class="list-group-item bg-light">
                 <a href="{{ path('app_dashboard') }}" class="text-decoration-none text-dark"> {{ ux_icon('lucide:house', {height: '16px', width: '16px', 'aria-hidden': true}) }} Dashboard</a>
             </li>
         {% endif %}
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_SUPPORT') %}
             <li class="list-group-item bg-light">
                 <a href="{{ path('app_users_index') }}" class="text-decoration-none text-dark">{{ ux_icon('lucide:circle-user-round', {height: '16px', width: '16px', 'aria-hidden': true}) }} Utilisateurs</a>
             </li>

@@ -91,13 +91,13 @@
                                     {{ ticket.priority.label }}
                                 </td>
                                 <td>{{ ticket.createdAt|date('Y-m-d') }}</td>
-                                {#  <td>#}
-                                    {#                                        <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">Voir</a>#}
-                                    {#                                    </td>#}
+                                  <td>
+                                      <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">Voir</a>
+                                  </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="5" class="text-center">No tickets found</td>
+                                <td colspan="6" class="text-center">No tickets found</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -138,9 +138,9 @@
                                         {{ ticket.priority.label }}
                                     </td>
                                     <td>{{ ticket.createdAt|date('Y-m-d') }}</td>
-{#                                    <td>#}
-{#                                        <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">Voir</a>#}
-{#                                    </td>#}
+                                    <td>
+                                        <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary">Voir</a>
+                                    </td>
                                 </tr>
                             {% else %}
                                 <tr>

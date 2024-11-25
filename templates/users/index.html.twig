@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Users Index</h1>
+        <h1 class="text-center mb-4">Utilisateurs</h1>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
@@ -23,13 +23,13 @@
                         <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                         <td>{{ user.createdAt ? user.createdAt|date('Y-m-d') : '' }}</td>
                         <td>
-                            <a href="{{ path('app_users_show', {'id': user.id}) }}" class="btn btn-primary btn-sm me-2">Show</a>
-                            <a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-secondary btn-sm">Edit</a>
+                            <a href="{{ path('app_users_show', {'id': user.id}) }}" class="btn btn-primary btn-sm me-2">Afficher</a>
+                            <a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-secondary btn-sm">Modifier</a>
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="5" class="text-center">No records found</td>
+                        <td colspan="5" class="text-center">Y'a rien chef</td>
                     </tr>
                 {% endfor %}
                 </tbody>

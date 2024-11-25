@@ -67,9 +67,8 @@ class AppFixtures extends Fixture
         $users = $this->userRepository->findAll();
         for ($i = 0; $i < $count; $i++) {
             $ticket = new Tickets();
-            $ticket->setTitle($faker->title());
+            $ticket->setTitle($faker->word());
             $ticket->setDescription($faker->text(200));
-
             $assignedUser = $users[array_rand($users)];
             $ticket->setAssignedTo($assignedUser);
             $priorities = TicketPriorityType::cases();
@@ -79,6 +78,7 @@ class AppFixtures extends Fixture
             $statuses = TicketStatusType::cases();
             $randomStatus = $statuses[array_rand($statuses)];
             $ticket->setStatus($randomStatus);
+            $ticket->setCreatedBy($users[array_rand($users)]);
 
             $manager->persist($ticket);
         }

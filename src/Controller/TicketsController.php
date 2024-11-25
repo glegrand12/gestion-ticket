@@ -15,8 +15,10 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use App\Event\TicketCreatedEvent;
 use App\Event\TicketStatusUpdatedEvent;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
+#[IsGranted('ROLE_USER')]
 #[Route('/tickets')]
 final class TicketsController extends AbstractController
 {
@@ -37,6 +39,7 @@ final class TicketsController extends AbstractController
             'tickets' => $tickets,
         ]);
     }
+
 
     #[Route('/new', name: 'app_tickets_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
@@ -94,7 +97,7 @@ final class TicketsController extends AbstractController
     public function editStatus(Request $request, Tickets $ticket, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
     {
         $user = $this->getUser();
-        if (!$this->isGranted('ROLE_ADMIN') && (!$this->isGranted('ROLE_SUPPORT') || $ticket->getAssignedTo() !== $user)) {
+        if ((!$this->isGranted('ROLE_SUPPORT') || $ticket->getAssignedTo() !== $user)) {
             throw new AccessDeniedException('You are not allowed to edit the status of this ticket.');
         }
 

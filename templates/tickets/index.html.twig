@@ -43,31 +43,40 @@
     </div>
     <div class="row g-2 mb-3" id="filtersContainer">
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre ID" data-column="0">
+            <label for="filter-id">ID</label>
+            <input type="text" id="filter-id" class="form-control filter-input" placeholder="Filtre ID" data-column="0">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Titre" data-column="1">
+            <label for="filter-title">Titre</label>
+            <input type="text" id="filter-title" class="form-control filter-input" placeholder="Filtre Titre" data-column="1">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Créé par" data-column="2">
+            <label for="filter-created-by">Créé par</label>
+            <input type="text" id="filter-created-by" class="form-control filter-input" placeholder="Filtre Créé par" data-column="2">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Assigné à" data-column="3">
+            <label for="filter-assigned-to">Assigné à</label>
+            <input type="text" id="filter-assigned-to" class="form-control filter-input" placeholder="Filtre Assigné à" data-column="3">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Statut" data-column="4">
+            <label for="filter-status">Statut</label>
+            <input type="text" id="filter-status" class="form-control filter-input" placeholder="Filtre Statut" data-column="4">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Priorité" data-column="5">
+            <label for="filter-priority">Priorité</label>
+            <input type="text" id="filter-priority" class="form-control filter-input" placeholder="Filtre Priorité" data-column="5">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Deadline" data-column="6">
+            <label for="filter-deadline">Deadline</label>
+            <input type="text" id="filter-deadline" class="form-control filter-input" placeholder="Filtre Deadline" data-column="6">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Créé le" data-column="7">
+            <label for="filter-created-at">Créé le</label>
+            <input type="text" id="filter-created-at" class="form-control filter-input" placeholder="Filtre Créé le" data-column="7">
         </div>
         <div class="col">
-            <input type="text" class="form-control filter-input" placeholder="Filtre Mis à jour le" data-column="8">
+            <label for="filter-updated-at">Mis à jour</label>
+            <input type="text" id="filter-updated-at" class="form-control filter-input" placeholder="Filtre Mis à jour le" data-column="8">
         </div>
     </div>
     <div class="table-responsive">
@@ -76,7 +85,6 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Titre</th>
-                <th scope="col">Crée par</th>
                 <th scope="col">Attribué à</th>
                 <th scope="col">Statut</th>
                 <th scope="col">Priorité</th>
@@ -91,7 +99,6 @@
             <tr>
                 <th scope="row">{{ ticket.id }}</th>
                 <td>{{ ticket.title }}</td>
-                <td>{{ ticket.createdBy.email }}</td>
                 <td>{{ ticket.assignedTo.email }}</td>
                 <td style="color: {{ status.statusColor(ticket.status.label) }};">
                     {{ ticket.status.label }}
@@ -110,7 +117,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="8" class="text-center">Pas de tickets trouvés</td>
+                <td colspan="10" class="text-center">Pas de tickets trouvés</td>
             </tr>
         {% endfor %}
         </tbody>

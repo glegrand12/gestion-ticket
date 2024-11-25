@@ -22,16 +22,12 @@ class TicketListenerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            TicketCreatedEvent::class => 'onTicketCreated',
+            //TicketCreatedEvent::class => 'onTicketCreated',
             TicketStatusUpdatedEvent::class => 'onTicketStatusUpdated',
         ];
     }
 
-    public function onTicketCreated(TicketCreatedEvent $event): void
-    {
-        // Simple debug pour vérifier la création d'un ticket
-        dd('Ticket Created', $event->getTicket());
-    }
+
 
     public function onTicketStatusUpdated(TicketStatusUpdatedEvent $event): void
     {
