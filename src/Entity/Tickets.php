@@ -35,6 +35,10 @@ class Tickets
     #[ORM\JoinColumn(nullable: true)]
     private ?Users $assignedTo = null;
 
+    #[ORM\ManyToOne(targetEntity: Users::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Users $createdBy = null;
+
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $deadline = null;
 
@@ -122,6 +126,16 @@ class Tickets
     public function setAssignedTo(?Users $assignedTo): void
     {
         $this->assignedTo = $assignedTo;
+    }
+
+    public function getCreatedBy(): ?Users
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?Users $createdBy): void
+    {
+        $this->createdBy = $createdBy;
     }
 
     public function getDeadline(): ?\DateTimeInterface

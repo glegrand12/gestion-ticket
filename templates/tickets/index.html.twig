@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tickets{% endblock %}
+{% import 'macros/status.html.twig' as status %}
+{% import 'macros/priority.html.twig' as priority %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterInputs = document.querySelectorAll('.filter-input');
+            const table = document.getElementById('ticketsTable');
+            const rows = table.querySelectorAll('tbody tr');
+
+            filterInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    const filters = Array.from(filterInputs).map(input => input.value.toLowerCase());
+
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td, th');
+                        let isVisible = true;
+
+                        filters.forEach((filter, index) => {
+                            if (filter && cells[index]) {
+                                const cellValue = cells[index].textContent.toLowerCase();
+                                if (!cellValue.includes(filter)) {
+                                    isVisible = false;
+                                }
+                            }
+                        });
+
+                        row.style.display = isVisible ? '' : 'none';
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Tickets</h1>
+    <div class="text-center mt-3">
+        <a href="{{ path('app_tickets_new') }}" class="btn btn-success mb-3">Nouveau ticket</a>
+    </div>
+    <div class="row g-2 mb-3" id="filtersContainer">
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre ID" data-column="0">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Titre" data-column="1">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Créé par" data-column="2">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Assigné à" data-column="3">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Statut" data-column="4">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Priorité" data-column="5">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Deadline" data-column="6">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Créé le" data-column="7">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control filter-input" placeholder="Filtre Mis à jour le" data-column="8">
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped" id="ticketsTable">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Crée par</th>
+                <th scope="col">Attribué à</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Priorité</th>
+                <th scope="col">Deadline</th>
+                <th scope="col">Crée le</th>
+                <th scope="col">Màj le</th>
+                <th class="text-center" scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <th scope="row">{{ ticket.id }}</th>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.createdBy.email }}</td>
+                <td>{{ ticket.assignedTo.email }}</td>
+                <td style="color: {{ status.statusColor(ticket.status.label) }};">
+                    {{ ticket.status.label }}
+                </td>
+                <td style="color: {{ priority.priorityColor(ticket.priority.label) }};">
+                    {{ ticket.priority.label }}
+                </td>
+                <td>{{ ticket.deadline ? ticket.deadline|date('Y-m-d') : '' }}</td>
+                <td>{{ ticket.createdAt ? ticket.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ ticket.updatedAt ? ticket.updatedAt|date('Y-m-d') : '' }}</td>
+                <td class="text-center">
+                    <a href="{{ path('app_tickets_show', {'id': ticket.id}) }}"><button class="btn btn-secondary btn-sm me-2">Afficher</button></a>
+                    <a href="{{ path('app_tickets_edit', {'id': ticket.id}) }}"><button class="btn btn-primary btn-sm me-2">Modifier</button></a>
+                    <a href="{{ path('app_ticket_edit_status', {'id': ticket.id}) }}"><button class="btn btn-success btn-sm me-2">MàJ le Statut</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8" class="text-center">Pas de tickets trouvés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+
+</div>
+{% endblock %}
