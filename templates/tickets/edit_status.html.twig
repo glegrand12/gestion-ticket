@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le statut du ticket{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Modifier le statut du ticket</h1>
+
+        <div class="card p-4 shadow-sm">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_widget(form) }}
+            </div>
+            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(form) }}
+        </div>
+
+        <div class="mt-3">
+            <a href="{{ path('app_tickets_index') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+{% endblock %}

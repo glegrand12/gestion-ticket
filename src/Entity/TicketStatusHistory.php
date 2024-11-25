@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use AllowDynamicProperties;
 use App\Enum\TicketStatusType;
 use App\Repository\TicketStatusHistoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TicketStatusHistoryRepository::class)]
+#[AllowDynamicProperties] #[ORM\Entity(repositoryClass: TicketStatusHistoryRepository::class)]
 class TicketStatusHistory
 {
     #[ORM\Id]
@@ -17,10 +18,10 @@ class TicketStatusHistory
 
     #[ORM\ManyToOne(targetEntity: Tickets::class, inversedBy: 'statusHistories')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tickets $ticket_id = null;
+    private ?Tickets $ticket = null;
 
     #[ORM\Column(type: 'string', enumType: TicketStatusType::class)]
-    private ?string $status = null;
+    private ?TicketStatusType $status = null;
 
     #[ORM\ManyToOne(targetEntity: Users::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -37,12 +38,12 @@ class TicketStatusHistory
 
     public function getTicketId(): ?Tickets
     {
-        return $this->ticket_id;
+        return $this->ticket;
     }
 
-    public function setTicketId(?Tickets $ticket_id): void
+    public function setTicketId(?Tickets $ticket): void
     {
-        $this->ticket_id = $ticket_id;
+        $this->ticket = $ticket;
     }
 
     public function getStatus(): TicketStatusType
@@ -65,12 +66,12 @@ class TicketStatusHistory
         $this->changed_by = $changed_by;
     }
 
-    public function getChangedAt(): \DateTimeImmutable
+    public function getChangedAt(): \DateTimeInterface
     {
         return $this->changed_at;
     }
 
-    public function setChangedAt(\DateTimeImmutable $changed_at): void
+    public function setChangedAt(\DateTimeInterface $changed_at): void
     {
         $this->changed_at = $changed_at;
     }

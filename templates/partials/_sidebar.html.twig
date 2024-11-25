@@ -1,12 +1,20 @@
 <aside class="bg-light border-end" id="sidebar-wrapper">
     <!-- Menu de navigation -->
     <ul class="list-group list-group-flush">
-        <li class="list-group-item bg-light">
-            <a href="{{ path('app_dashboard') }}" class="text-decoration-none text-dark"> {{ ux_icon('lucide:house', {height: '16px', width: '16px', 'aria-hidden': true}) }} Dashboard</a>
-        </li>
+
         {% if is_granted('ROLE_SUPPORT') %}
             <li class="list-group-item bg-light">
+                <a href="{{ path('app_dashboard') }}" class="text-decoration-none text-dark"> {{ ux_icon('lucide:house', {height: '16px', width: '16px', 'aria-hidden': true}) }} Dashboard</a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="list-group-item bg-light">
                 <a href="{{ path('app_users_index') }}" class="text-decoration-none text-dark">{{ ux_icon('lucide:circle-user-round', {height: '16px', width: '16px', 'aria-hidden': true}) }} Utilisateurs</a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_USER') %}
+            <li class="list-group-item bg-light">
+                <a href="{{ path('app_tickets_index') }}" class="text-decoration-none text-dark">{{ ux_icon('lucide:tickets', {height: '16px', width: '16px', 'aria-hidden': true}) }} Tickets</a>
             </li>
         {% endif %}
         {% if app.user %}

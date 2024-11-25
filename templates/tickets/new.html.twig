@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau ticket{% endblock %}
+
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Nouveau ticket</h1>
+
+        <div class="card p-4 shadow-sm">
+            {{ include('tickets/_form.html.twig') }}
+
+        </div>
+
+        <div class="mt-3">
+            <a href="{{ path('app_tickets_index') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+{% endblock %}
